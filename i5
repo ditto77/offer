@@ -1,0 +1,58 @@
+package offer;
+public class i5 {
+	/*	public static void main(String[] args) {
+		
+		// TODO Auto-generated method stub
+		//第一种：StringBuilder，因为要连续修改字符串
+		String s="hello world";
+		String results=getResult(s);
+		System.out.print(results);
+	}
+	public static String getResult(String s) {
+		StringBuilder strb=new StringBuilder();
+		for(int i=0;i<s.length();i++) {
+			if(s.charAt(i)==' ') {
+				strb.append("%20");
+			}else {
+				strb.append(s.charAt(i));
+			}
+				
+		}
+		return strb.toString();//将strb的类型转化为string类型	
+	
+	}	*/
+	public static void main(String[] args) {
+		//第二种方法，用两个指针，分别指向原始字符串的末尾和替换之后的字符串的末尾
+		//因为每个空格，就多增加两个长度，因此知道空格的数量就可以知道替换之后的总长度
+		String s="hello my world";
+		char[] result=getResult(s);
+		for(int i=0;i<result.length;i++) {
+			System.out.print(result[i]);
+		}
+	}
+		
+	public static char[] getResult(String s) {
+		int count=0;//记录空格的数量
+		for(int i=0;i<s.length();i++) {
+			if(s.charAt(i)==' ') {
+				count++;
+			}
+		}
+		//根据空格数量可以知道修改之后的总长度，为2*空格+原始长度
+		//第二个指针指向的位置是修改之后的总长度-1
+		char[]chs=new char[2*count+s.length()];//新生成一个字符串，长度为new char【】里面的内容
+		int temp1=s.length()-1;//temp1是指针1.指向的是修改之前的字符串末尾
+		for(int i=2*count+s.length()-1;i>=0;i--) {
+			System.out.printf("temp1:%d,i:%d,char:%c\n", temp1,i,s.charAt(temp1));
+			if(s.charAt(temp1)!=' ') {
+				chs[i]=s.charAt(temp1);			
+			}else {
+				chs[i--]='0';
+				chs[i--]='2';
+				chs[i]='%';	//这里注意一定不要写成chs[i--]
+			}
+			temp1--;
+		}
+		return chs;
+	}	
+}
