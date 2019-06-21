@@ -1,0 +1,127 @@
+package offer;
+import java.util.Scanner;
+public class i3t2 {
+//不能修改给的数组
+/*	public static boolean main(String[] args) {
+		// TODO Auto-generated method stub
+		Scanner in = new Scanner(System.in);//接收输入
+		String []num = in.nextLine().split("\\s+");
+		int a=num.length;
+		int[] nums = null;
+		for(int i=0;i<a;i++) {
+		nums[i]=Integer.parseInt(num[i]);
+		}
+		if(a<=0) {
+			return false;
+		}
+		int start=1;
+		int end=a-1;
+		int count=0;
+		while(end>=start) {
+			int middle=((end-start)>>1)+start;
+			for(int i=0;i<middle;i++) {
+				if(nums[i]>=1&&nums[i]<=middle) {
+					++count;
+				}
+			}
+			if(end==start) {
+				if(count>1) {
+					start=start;
+				}else {
+					break;
+				}
+			}
+			if(count>(middle-start+1)) {
+				end=middle;
+			}
+			else {
+				start=middle+1;
+			}
+			
+		}
+		
+		return false;
+	}
+
+}*/
+/*	public static void main(String[] args) {
+		// 不含重复数字
+		int[] intList = new int[] {4,8,3,0,5,2,6,7,9,1};
+		int fount = findN(intList);
+		System.out.println(fount);
+	}  
+	
+ 
+	
+	public static int findN(int[] L) {
+		int len = L.length;
+		if(len==0) {
+			return 0;
+		}
+		int[] temp = new int[len];
+		for(int i=0;i<len;i++) {
+			// 防止数组中有超过n+1的数
+			if(L[i]>len) {
+				return -2;
+			}
+			if(temp[L[i]]==0) {
+				temp[L[i]]++;
+			}else {
+				return L[i];
+			}
+		}
+        // 数组中没有重复数字
+		return -1;
+	}
+}*/
+//不含重复数字
+	public static void main(String[] args) {
+		int[] intList = new int[] {1,4,4,6,5,3,0};
+		int Result = findN(intList);
+		System.out.println(Result);
+	}  
+	
+	public static int findN(int[] L) {
+		// 检查为空数组
+		if(L.length==0) {return -1;}
+		// 检查小于1或超过n的数
+		for (int i = 0; i < L.length; i++) {
+	            if (L[i] < 1 || L[i] >= L.length) {
+	                return -1;
+	            }
+		int start = 0;
+		int end = L.length-1;
+		int count = 0;
+		while(start<=end) {
+			if(start==end) {
+				count = countN(L, start, end);
+				if(count>1) {
+					return start;
+				}else {
+					break;
+				}
+			}
+			
+			int mid = (start+end)/2;
+			count = countN(L, start, mid);
+			// 如果大于本该有的数字个数 则继续在该范围内搜索
+			if(count > mid-start+1) {
+				end = mid;
+			}else {
+				start = mid+1;
+			}
+		}
+	}
+		return -1;
+}	
+	public static int countN(int[] L,int start,int end) {
+		int count=0;	
+		for(int i =0;i<L.length;i++) {
+				if(L[i]>=start && L[i]<=end){
+					count++;
+				}
+			}
+		return count;
+	}
+	}
+	
