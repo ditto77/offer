@@ -1,0 +1,43 @@
+package offer;
+import java.util.Scanner;
+public class i4 {
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		boolean found=false;
+		Scanner in=new Scanner(System.in);
+		System.out.println("请输入要找的数字");
+		int z=in.nextInt();
+		System.out.println("请输入数组行数和列数");
+		int x=in.nextInt();
+		int y=in.nextInt();
+		int [][]array=new int[x][y];//初始化数组
+		System.out.println("请输入数组元素");
+		for(int i=0;i<x;i++)//循环输入
+		for(int j=0;j<y;j++)
+		array[i][j]=in.nextInt();
+		System.out.println("你输入的数组为");
+		for(int i=0;i<x;i++){//循环输出
+		for(int j=0;j<y;j++)
+		System.out.print(array[i][j]+"\t");
+		System.out.println();
+		}
+		if(x>0&&y>0) {
+			int row=0;
+			int col=y-1;
+			while(row<x&&col>=0) {
+				if(array[row][col]==z) {
+					found=true;
+					break;
+				}
+				else if(array[row][col]>z) {
+					col--;
+				}
+				else {
+					row++;
+				}
+			}
+			
+		}
+		System.out.print(found);
+	}
+}
