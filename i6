@@ -1,0 +1,65 @@
+package offer;
+import java.util.ArrayList;
+import java.util.Stack;
+public class i6 {
+	//利用栈实现链表逆序
+static class ListNode{
+		//节点的定义
+		int value;
+		ListNode next;
+		/*ListNode(int value){
+			this.value=value;
+		}*/
+	}
+	//private ArrayList<Integer> showRevrse(ListNode listNode) {
+static class showReverse{
+    public void showReverse(ListNode listNode) {
+		Stack<ListNode>stack=new Stack<ListNode>();
+		//链表下一个节点不为空的时候，将节点入栈
+		while(listNode!=null) {
+			stack.push(listNode);
+			listNode=listNode.next;
+		}//栈不为空的时候，节点出栈
+		while(!stack.isEmpty()) {
+			//list.add(stack.pop());
+			System.out.print(stack.pop().value+" ");
+		}	
+	}
+}
+	public static void main(String[] args) {	
+		/*ListNode head=new ListNode(0);
+		for(int i=0;i<10;i++) {//创建从0到9的链表
+			head.addNode(head,i);	
+		}
+		//只有头节点的链表
+		ListNode head1=new ListNode(0);
+		//空链表
+		ListNode head2=null;
+		//
+		showRevrse(head1);*/
+		ListNode node1 = new ListNode();//因为ListNode类在class i6的内部，因此只能在类i6中进行实例化，也可以将
+		//i6的类改为static
+		ListNode node2 = new ListNode();
+		ListNode node3 = new ListNode();
+		node1.value = 1;
+		node2.value = 3;
+		node3.value = 5;
+		node1.next = node2;
+		node2.next = node3;
+		showReverse test = new showReverse();
+		test.showReverse(node1);
+		         
+	}
+	//利用递归实现链表逆序
+	public class Solution {
+	    ArrayList<Integer> list = new ArrayList<>();
+	    public ArrayList<Integer> printListFromTailToHead(ListNode listNode) {  
+		    if(listNode!=null){
+	            printListFromTailToHead(listNode.next);
+	            list.add(listNode.value);
+	        }
+	        return list;
+	    }
+	}
+	
+}
