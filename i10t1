@@ -1,0 +1,26 @@
+package offer;
+
+public class i10t1 {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+       int f=Fibonacci(10);
+	}
+//自顶向下的思想求斐波那契数字
+	public static int Fibonacci(int n) {
+		// TODO Auto-generated method stub
+		if(n==0||n==1)
+			return n;
+		int fn0=0;
+		int fn1=1;
+		int fn=0;//初始化要求的值为0
+		for(int i=2;i<=n;i++) {
+			fn=fn0+fn1;
+			fn0=fn1;
+			fn1=fn;
+		}		
+		System.out.print(fn);
+		return fn;
+	}
+
+}
