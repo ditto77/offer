@@ -1,0 +1,99 @@
+package offer;
+	import java.util.Arrays;
+	public class i7 {
+	/*	public static class BinaryTreeNode {
+			int val;
+			public BinaryTreeNode left;
+			public BinaryTreeNode right;
+		}
+		public static void main(String[] args) {
+			// TODO Auto-generated method stub
+			int a[]= {1,2,4,7,3,5,6,8};
+			int b[]= {4,7,2,1,5,3,8,6};//输入先序和中序大的数组
+			BinaryTreeNode root=getTree(a,b);
+			
+		}
+
+		public static BinaryTreeNode getTree(int[] a, int[] b) {
+			// TODO Auto-generated method stub
+			if(a.length==1) {//如果只有一个节点，而且两个数组的第一个数相等
+			//证明两个数组表示的是一个树，直接输出就可以
+				if(a[0]==b[0]) {
+					return new BinaryTreeNode();
+				}else {
+					System.out.print("a and b not same tree\n");
+					return null;
+				}
+			}
+			//数组为空，则返回null
+			if(a.length==0) {
+				return null;
+			}
+			//如果不是上面两种情况，则对数组进行构建子树/树
+			BinaryTreeNode head=new BinaryTreeNode();
+			//寻找左右子树的划分点
+			int index=findLoc(a[0],b);
+			//如果在b中寻找a[0]点，并没有找到，则两个数组表示的并不是一棵树
+			if(index==-1) {
+				return null;
+			}
+			//如果数字表示的都是一棵树，而且不仅仅只有一个节点
+			//对左右子树进行构建
+			head.left=getTree(Arrays.copyOfRange(a,1,index+1),Arrays.copyOfRange(b,0,index));
+			head.right=getTree(Arrays.copyOfRange(a,index+1,a.length),Arrays.copyOfRange(b,index+1,b.length));
+			return head;
+			
+		}
+		private static int findLoc(int x, int[] b) {
+			//在b中找是否存在a[0]
+			// TODO Auto-generated method stub
+			for(int i=0;i<b.length;i++) {
+				if(b[i]==x) {
+					return i;
+				}
+			}
+			return -1;
+		}	*/
+		public static class TreeNode{//定义节点的类
+				// TODO Auto-generated constructor stub
+			int val;
+			TreeNode left;
+			TreeNode right;
+			TreeNode root;
+			TreeNode(int x){
+				val=x;
+			}
+		}
+		public static void main(String[] args) {
+			// TODO Auto-generated method stub
+			int a[]= {1,2,4,7,3,5,6,8};
+			int b[]= {4,7,2,1,5,3,8,6};//输入先序和中序大的数组
+			TreeNode root=reConstructBinaryTree(a,b);
+			
+		}
+		public static TreeNode reConstructBinaryTree(int[] a, int[] b) {
+			// TODO Auto-generated method stub
+			if(a.length==0||b.length==0) {//如果a或者b是空数组
+			return null;
+			}
+			return ConstructBinaryTree(a,0,a.length-1,b,0,b.length-1);
+			
+		}
+		public static TreeNode ConstructBinaryTree(int[] a, int i, int j, int[] b, int k, int l) {
+			// TODO Auto-generated method stub
+			if(i>j||k>l) {//如果是这种情况的话，证明a数组的下标比数组的长度还要大
+				return null;
+			}
+				TreeNode root=new TreeNode(a[i]);//将根节点设置为数组的第一个数
+				for(int i1=k;i1<l;i1++ ) {
+					if(b[k]==a[i1]) {
+						root.left=ConstructBinaryTree(a, i+1, i+i1-k, b, k, i1-1);
+						//根左边的为数组b[k]开始一直到与数组a的第一个数相等的位置为止
+						root.right=ConstructBinaryTree(a, i+i1-k+1, j, b, i1+1, l);
+						//根右边的为与a第一个数相等的数开始，一直到最右边位置为止
+						break;
+					}
+			}
+			return root;
+		}
+}
