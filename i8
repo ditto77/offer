@@ -1,0 +1,146 @@
+package offer;
+
+public class i8 {
+
+	/*public static class TreeNode{
+	int val;
+	TreeNode left;
+	TreeNode right;
+	TreeNode next;
+	TreeNode(int x){
+		val=x;
+	}
+}
+public static TreeNode GetNext(TreeNode pNode) {
+	if(pNode==null) {
+		return null;//树不存在
+	}
+	//下面分为三种情况：
+	//第一种：如果要查找的节点右子树不为空，则返回右子树的最左子树
+	if(pNode.right!=null) {
+		TreeNode node=pNode.right;
+		while(node.left!=null) {//左右节点都不为空
+			node=node.left;//则从该节点的右子树出发，一直沿着指向左子树的指针寻找，直到找到节点为止
+		}
+		//如果只有右子树，没有左子树，
+		return node;//如果该节点的右子树没有左子树，则该节点的右子树节点即为它的下一个节点
+	}
+	//第二种：节点有下一个节点，而且节点没有右子树，同时节点又是其父亲节点的左子树
+	//在这种情况下，该节点的下一个节点为它的父亲节点
+	while(pNode.next!=null) {
+		//TreeNode root=pNode.next;
+		if(pNode==pNode.next.left) {
+			return pNode.next;
+		}
+		pNode=pNode.next;
+	}
+	//第三种：没有下一个节点，没有右子树
+	System.out.print("they don't have next node");
+	return null;
+	
+}
+
+public static void main(String[] args) {
+    TreeNode node = null;
+	//TreeNode node =TreeNode();
+	//	TreeNode node = TreeNode();
+	TreeNode next = GetNext(node);
+	// 4 2 8 5 9 1 6 3 7 
+	if(next!=null) {
+		System.out.println(next.val);
+	}
+}*/
+public static class ListNode{
+	int val;
+	ListNode left;
+	ListNode right;
+	ListNode next;
+	ListNode father;
+	ListNode(int x){
+		val=x;
+	}
+public static ListNode oTo(ListNode head1) {
+		// TODO Auto-generated method stub
+		if(head1.left!=null) {
+			oTo(head1.left);		
+		}
+		if(head1.right!=null) {
+			oTo(head1.right);
+		}
+		return head1;
+	}
+}
+public static void main(String[] args) {
+		// 构造第二版书上P65的树，a~i按层从上到下，为1~9
+		ListNode head1 = new ListNode(1);
+		ListNode node2 = new ListNode(2);
+		ListNode node3 = new ListNode(3);
+		head1.left = node2;
+		head1.right = node3;
+		ListNode node4  = new ListNode(4);
+		ListNode node5  = new ListNode(5);
+		node2.left = node4;
+		node2.right = node5;
+		ListNode node6  = new ListNode(6);
+		ListNode node7  = new ListNode(7);
+		node3.left = node6;
+		node3.right = node7;
+		ListNode node8  = new ListNode(8);
+		ListNode node9  = new ListNode(9);
+		node5.left = node8;
+		node5.right = node9;
+		
+		// 显示中序遍历
+		head1.oTo(head1);
+ 
+		
+		ListNode node = findNext(node7);
+		if(node == null) {System.out.println("null");}
+		else {
+			System.out.printf("\nresult:%d",node.val);
+		}
+	}
+	
+	public static ListNode findNext(ListNode node) {
+		if(node == null) {
+			return null;
+		}
+		ListNode temp = null;;
+		
+		// 情况一：存在右子树——寻找右子树中的最左节点
+		if(node.right!=null) {
+			temp = node.right;
+			System.out.printf("\n存在右子树 :%d",temp.val);
+			while(temp.left!=null) {
+				temp = temp.left;
+			}
+			return temp;
+			
+		}
+		// 情况二：不存在右子树，此中分两类
+		else{
+			temp = node;
+			System.out.println("\n没有右子树");
+			
+			// 如果该结点没有父节点，则中序遍历中为最后一个节点，返回null
+			if(temp.father==null) {
+				return null;
+			}
+			
+			// 如果该结点有父节点，寻找上层结点中，第一个为自己父节点的左节点的位置，并返回该结点的父节点
+			else {
+				while(temp!=null) {
+					if(temp.father!=null) {
+						if(temp.father.left == temp) {
+							return temp.father;
+						}else {
+							temp = temp.father;
+						}
+					}
+					temp = temp.father;
+				}
+				return null;
+			}
+		}
+	}
+}
