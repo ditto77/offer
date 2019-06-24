@@ -1,0 +1,26 @@
+package offer;
+
+public class i10t2 {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		int n=frog(3);
+	}
+
+	public static int frog(int i) {
+		// TODO Auto-generated method stub
+		if(i==0||i==1) {
+			return 1;//在这里，i==0表示一下跳完的情况，一下跳完只有一种情况因此结果为1
+		}
+		if(i==2) {
+			return 2;
+		}
+		int sum=0;
+			for(int j=0;j<i;j++) {
+				sum+=frog(j);//相当于从frog(0)+frog(1)+...+frog(i-1)
+			}
+		System.out.print(sum);
+		return sum;
+	}
+
+}
