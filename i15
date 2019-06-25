@@ -1,0 +1,23 @@
+package offer;
+
+public class i15 {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		int number=Number(10);//注意在这里输入的10是十进制的数字，但是要输出的二进制，比如输入10，在运算中应该为1010，所以结果为2
+		System.out.print(number);
+
+	}
+
+	public static int Number(int i) {
+		// TODO Auto-generated method stub
+		int count=0;
+		while(i!=0) {
+			++count;
+			i=(i-1)&i;
+			//System.out.print(i);
+		}//
+		return count; 
+	}
+
+}
