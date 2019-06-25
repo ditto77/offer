@@ -1,0 +1,27 @@
+package offer;
+
+public class i15t1 {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		//判断一个整数是否为2的整数倍，如果该数字是2的整数倍，则转化为2进制之后，只有一个1，所以只要减去1，再与本身做与运算即可，如果结果为0，则为2的整数倍
+		if(check(19)==true) {//注意在这里输入的10是十进制的数字，但是要输出的二进制，比如输入10，在运算中应该为1010，所以结果为2
+		System.out.print("Yes");
+		}
+		else {
+		System.out.print("No");
+		}
+
+	}
+
+	public static boolean check(int i) {
+		// TODO Auto-generated method stub
+		if(((i-1)&i)==0) {
+			return true;
+		}
+		return false;
+	}
+
+	
+
+}
