@@ -1,7 +1,10 @@
 package offer;
 
 public class i14 {
-	public int MaxCutting(int length) {
+	//动态规划的方法，即找出每一步的最优解
+	//但是这种方法的时间复杂度为n^2，空间复杂度为n
+	/*
+	  public int MaxCutting(int length) {
 		if(length<2) {
 			return 0;
 		}
@@ -22,7 +25,23 @@ public class i14 {
 			}
 		}
 		max=product[length];//将每个长度的最优解放到数组里
-		return max;
+		return max;	
+	}*/
+	//贪婪算法
+	public int MaxCutting_solution(int length) {
+		if(length<2) {
+			return 0;
+		}
+		if(length==2)
+			return 1;
+		if(length==3)
+			return 2;
+		int times3=length/3;
+		if(length-times3*3==1) {
+			times3-=1;//因为如果只剩下1米的话，乘积不会是最大，因此要把前一个3米拿出来，合成4米，分成2*2的两段
+		}
+		int times2=(length-times3*3)/2;
+		return(int)(Math.pow(3,times3)*Math.pow(2,times2));//因为最终的乘积是times3个3相乘，再乘以times2个2
 		
 	}
 
