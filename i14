@@ -1,0 +1,29 @@
+package offer;
+
+public class i14 {
+	public int MaxCutting(int length) {
+		if(length<2) {
+			return 0;
+		}
+		if(length==2)
+			return 1;
+		if(length==3)
+			return 2;
+		int product[]=new int[length+1];
+		int max=0;
+		for(int i=4;i<=length;i++) {
+			max=0;
+			for(int j=1;j<=2/i;j++) {
+				int products=product[j]*product[i-j];
+				if(max<products) {
+					max=products;
+				}
+				product[i]=max;
+			}
+		}
+		max=product[length];//将每个长度的最优解放到数组里
+		return max;
+		
+	}
+
+}
