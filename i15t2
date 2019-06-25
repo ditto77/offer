@@ -1,0 +1,24 @@
+package offer;
+
+public class i15t2 {
+
+	public static void main(String[] args) {
+		//m，n二进制表示时，要改变多少位才能由m转为n
+		//只需要做异或运算之后，不相同的转为1，计算1的个数即可
+		// TODO Auto-generated method stub
+		int a=Count(10,10);
+		System.out.print(a);
+
+	}
+	public static int Count(int i, int j) {
+		// TODO Auto-generated method stub
+		int count=0;
+		int b=i^j;
+		while(b!=0) {
+			++count;
+			b=(b-1)&b;
+			//System.out.print(i);
+		}//
+		return count;
+	}
+}
