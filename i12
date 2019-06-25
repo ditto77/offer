@@ -1,0 +1,76 @@
+package offer;
+public class i12 {
+	//matrix是一个一维数组但用来表示二维的矩阵，是不是想问为啥不直接用二维数组
+		//博主也想用二维数组来表示矩阵，但是牛客网上给的参数就一维数组，博主也很无奈
+		//row表示矩阵的行数 cols表示矩阵的列数 str表示的是带查找的字符串
+		 public boolean hasPath(char[] matrix, int rows, int cols, char[] str)
+		    {
+		        if(matrix==null||rows<1||cols<1||str==null)
+		        {
+		            return false;
+		        }
+		        //visted是一个标志数组用来标志哪些格子已经被访问过
+		        boolean[] visted=new boolean[rows*cols];
+		        //初始化标志数组,全部为未访问过状态
+		        for(int i=0;i<rows;i++)
+		        {
+		        	for(int j=0;j<cols;j++) {
+		            visted[i]=false;
+		        	}
+		        }
+		        //用来表示待查找字符串在矩阵中已经找到的字符个数
+		        Integer pathLength=0;
+		        //双重循环用来遍历矩阵寻找待查找字符串的第一个字符 row表示矩阵的当前行数
+		        //col表示矩阵当前的列数
+		        for(int row=0;row<rows;row++)
+		        {
+		            for(int col=0;col<cols;col++)
+		            {
+		            //递归查找待查找的字符在矩阵中是否存在
+		                if(hasPathCore(matrix,rows,cols,row,col,str,pathLength,visted))
+		                {
+		                    return true;
+		                }
+		            }
+		        }
+		        return false;
+		    }
+		 
+		    private boolean hasPathCore(char[] matrix,int rows,int cols,int row,int col,char[] str,Integer pathLength,boolean[] visited)
+		    {
+		    //如果待查找的字符串的所有字符都在矩阵中找到
+		        if(pathLength==str.length)
+		        {
+		            return true;
+		        }
+		        //用来表示在在矩阵中的某一个格子附近是否还能找到待查找字符串的下一个字符
+		        boolean hasPath=false;
+				//如果矩阵当前格子的位置的字符等于待查找字符串的下一个字符,str[pathLength]指字符串中当前下标为pathLength的字符
+		        //因为用一维来表示二维数组，因此a[x][y]=a[x*cols+y]
+		       if(row>=0&&row<rows&&col>=0&&col<cols&&matrix[row*cols+col]==str[pathLength]&&!visited[row*cols+col])
+		        {
+		          
+		            ++pathLength;
+
+		            visited[row*cols+col]=true;
+		            //继续在该位置的其他方向进行寻找下一个字符
+		            //左
+		            if(hasPath=hasPathCore(matrix,rows,cols,row,col-1,str,pathLength,visited)//左
+		                    ||hasPathCore(matrix,rows,cols,row-1,col,str,pathLength,visited)//上                 
+		                    ||hasPathCore(matrix,rows,cols,row,col+1,str,pathLength,visited)//右
+		                    ||hasPathCore(matrix,rows,cols,row+1,col,str,pathLength,visited)) //下
+		            	{
+		            	return true;
+		            }
+		            //如果在某个位置上找不到待查找字符串的下一个字符
+		            if(!hasPath)
+		            {
+		            //回退到上一个位置
+		                --pathLength;
+		                visited[row*cols+col]=false;
+		            }
+		        }
+		        return hasPath;
+		    }
+
+	}
