@@ -1,0 +1,57 @@
+package offer;
+
+public class i11 {
+
+	public static int Min(int a[],int length){
+		if(length<=0) {
+			System.out.print("error");
+		}
+		int index1=0;
+		int index2=length-1;
+		int mid = 0;//如果第一个数字就是最小数的时候也能满足，因此将mid设为0，或者是index1
+		while(a[index1]>=a[index2]) {
+			if(index2-index1==1) {
+				mid=index2;
+				break;
+			}
+	    mid=(index1+index2)/2;
+	    if(a[index1]==a[index2]&&a[mid]==a[index1]) {
+	    	return MinOrder(a,index1,index2);
+	    }
+	    if(a[mid]>=a[index1]) {
+	    	index1=mid;
+	    }else if(a[mid]<=a[index2]) {
+	    	index2=mid;
+	    }
+		
+		}
+		System.out.print(a[mid]);
+		return a[mid];
+		
+	}
+	private static int MinOrder(int[] a, int index1, int index2) {
+		// TODO Auto-generated method stub
+		int result=a[index1];//result初始化为第一个数也就是index1指向的数字
+		for(int i=index1+1;i<index2;i++) {//从index1之后一直到index2进行顺序查找
+			if(result>a[i]) {//如果result大，证明查找到的a[i]比当前的index1要小
+				result=a[i];
+			}
+			else {
+				continue;
+			}
+		}
+		System.out.print(result);
+		return result; 
+	}
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		int a[]= {0,1,3,2};//测试的时候应该注意特殊情况，比如第一个就是最小，旋转0个数
+		//比如[1,0,1,1,1],在这种情况下，因为第一个最后一个，中间的数字都为1，所以无法判断是属于前面的递增数组还是属于后面的数组
+		//因此在这种情况时，就要进行顺序查找,也就是上面的MinOrder函数
+		// {1,0,2,1,1}不会出现，因为要求的是某一部分是递增序列，这样的话相当于乱序
+		int length=a.length;
+		int min=Min(a,length);
+	}
+
+}
+
