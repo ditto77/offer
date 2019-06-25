@@ -1,0 +1,47 @@
+package offer;
+
+public class i13 {
+	public static int Count(int k,int rows,int cols) {
+		if(rows<=0||cols<=0||k<=0) {
+			return 0;
+		}
+		boolean[] visited=new boolean[rows*cols];
+		for(int i=0;i<rows+cols;i++) {
+				visited[i]=false;
+		}
+		int count=CountCore(k,rows,cols,0,0,visited);
+		return count;
+		
+	}
+	public static int CountCore(int k, int rows, int cols, int i, int j, boolean[] visited) {
+		// TODO Auto-generated method stub
+		int count=0;
+		if(checked(k,rows,cols,i,j,visited)) {
+			visited[i*cols+j]=true;
+			count=1+CountCore(k,rows,cols,i-1,j,visited)+CountCore(k,rows,cols,i+1,j,visited)+
+					CountCore(k,rows,cols,i,j-1,visited)+CountCore(k,rows,cols,i,j+1,visited);
+			
+		}
+		return count;
+	}
+	public static boolean checked(int k, int rows, int cols, int i, int j, boolean[] visited) {
+		// TODO Auto-generated method stub
+		if(i>=0&&i<=rows&&j>0&&j<=cols&&DigitSum(i)+DigitSum(j)<=k&&!visited[i*cols+j]) {
+			return true;
+		}
+		return false;
+	}
+	public static int DigitSum(int i) {
+		// TODO Auto-generated method stub
+		int sum=0;
+		while(i>0) {
+			sum+=i%10;
+			i=i/10;
+		}
+		return sum;
+	}
+	public static void main(String[] args) {
+		
+	}
+
+}
