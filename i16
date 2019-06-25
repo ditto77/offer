@@ -1,0 +1,61 @@
+package offer;
+public class i16 {
+//数值的整数次方的问题
+	static boolean invalidInput=false;//设置全局变量标志错误。出错的时候为true，正确的时候为false
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		double test=Power(1.2,3);
+		System.out.print(test);
+	}
+	public static boolean equal(double base, double d) {
+		// TODO Auto-generated method stub
+		double temp=base-d;
+		if(temp>-0.0000001&&temp<0.0000001)
+			return true;
+		else
+			return false;
+	}
+	public static double Power(double base, int exponent) {
+		if(equal(base,0.0)&&exponent<=0) {//因为double本身就是不精确的，只是一个范围，因此double不能够直接比较大小
+			//因此一般比较的时候，如果两者的差值在一个很小的范围内，则证明两者相等
+			invalidInput=true;
+			return 0.0;
+		}
+		int exponent1=exponent;
+		if(exponent<0) {//如果指数是一个负数，先转为正数之后再计算
+			exponent1=-exponent;
+		}
+		double result=powerWithPower(base,exponent1);
+		if(exponent<0)
+			result=1.0/result;
+		return result;
+		// TODO Auto-generated method stub
+	}
+	/*
+	 //第一种方式，考虑边界、准确，虽然全面但是不够高效
+	public static double powerWithPower(double base, int exponent) {
+		// TODO Auto-generated method stub
+		double result=1.0;//在这个方法里，指数已经全部变为了正数，因此不必考虑指数正负的问题
+		for(int i=1;i<=exponent;i++) {
+			result*=base;
+		}
+		return result;
+	}
+	*/
+	public static double powerWithPower(double base, int exponent) {
+		// TODO Auto-generated method stub
+		if(exponent==0) 
+			return 1.0;
+		if(exponent==1)
+			return base;
+		double result=powerWithPower(base,exponent>>1);//用右移来表示除以2
+		result*=result;//如果为偶数，则a^n=a^(n/2)*a^(n/2)
+		if((exponent& 1)==1)//用按位与来判断奇偶
+			//判断是否为奇数，为奇数的时候还要乘以一个base,a^n=a^(n/2)*a^(n/2)*a
+			result*=base;
+		return result;
+	}
+	
+	
+
+}
