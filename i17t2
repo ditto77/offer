@@ -1,0 +1,52 @@
+package offer;
+
+public class i17t2 {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		PrintMax(2);
+	}
+
+	public static void PrintMax(int n) {
+		// TODO Auto-generated method stub
+		if(n<=0) {
+			System.out.print(1);
+		}
+		char[]number=new char[n+1];
+		number[n]='\0';
+		for(int i=0;i<10;i++) {
+			number[0]=(char) (i+48);
+			PrintMaxOfDigits(number,n,0);
+		}
+		number=null;
+	}
+
+	public static void PrintMaxOfDigits(char[] number, int length, int index) {
+		// TODO Auto-generated method stub
+		if(index==number.length-1) {//如果当前是个位数字，则将数字直接打印出来
+			PrintNumber(number);
+		}else {
+			for(int i=0;i<10;i++) {//继续处理下一位
+				number[index+1]=(char)(i+48);
+				PrintMaxOfDigits(number,length,index+1);
+			}
+		}
+	}
+
+	public static void PrintNumber(char[] number) {
+		// TODO Auto-generated method stub
+		 //从第一个非零数字开始打印!
+        boolean flag=true; // 当前位还是0则为ture
+        for(int i=1; i<number.length; i++){
+            if(flag && number[i] != '0')
+                flag = false;
+            if(!flag && i==number.length-1){//个位直接打印出来
+                System.out.println(number[i]);
+                break;
+            }
+            if(!flag)
+                System.out.print(number[i]);
+        }
+	}
+
+}
