@@ -1,0 +1,71 @@
+package offer;
+
+public class i17t1 {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+			PrintMax(2);
+	}
+
+	public  static void PrintMax(int n) {
+		// TODO Auto-generated method stub
+		if(n<=0) {
+			System.out.print(1);
+		}
+		char[]number=new char[n+1];//number[0]作为最大数字的进位标志
+		for(int i=0;i<n;i++) {
+			number[i]='0';//第一位作为最大数字是否有进位的标志符
+		}
+		number[n]='\0';
+		while(!Increment(number)) {
+			PrintNumber(number);
+		}
+		number=null;//会让a之前代表的数组不再被引用，从而自动被回收
+	}
+
+	public static void PrintNumber(char[] number) {
+		// TODO Auto-generated method stub
+		boolean isBeginning0=true;
+		for(int i=1;i<number.length;i++) {
+			if(isBeginning0&&number[i]!='0') {
+				isBeginning0=false;
+			}
+			if(!isBeginning0&&i==number.length-1) {
+				System.out.print(number[i]);
+				break;
+			}
+			if(!isBeginning0) {
+				System.out.print(number[i]);
+			}
+		}
+	}
+	public  static boolean Increment(char[] number) {
+		// TODO Auto-generated method stub
+		//这个函数是为了执行加1操作
+		//设置一个标志位，代表当前位是否有进位
+	    int overflag=0;//over也表示当前是否有进位
+	    //一位一位进行判断，首先从个位开始
+	    for(int i=number.length-1;i>0;i--) {
+	    	int sum=number[i]-'0'+overflag;//sum表示当前是第几，除了个位之外，其余的位数字都是在减去‘0’的基础上加over
+	    	if(i==number.length-1) {//个位的值是在原来的值上加1，个位的值位于最右边，此时i=number.length
+	    		sum++;
+	    	}
+	    	if(sum>=10) {
+	    		if(i==1) {//如果最高位有进位，则表示循环已经可以结束了
+	    			number[0]='1';
+	    		}else {//如果非最高位有进位，则改变标志位
+	    			overflag=1;
+	    			number[i]=(char)(sum-10+48);//加48是为了将i位上的数字转为char类型
+	    		}
+	    	}
+	    	//如果没有进位的话，进位符右当前位决定，影响下一位的取值
+	    	else {
+	    		overflag=0;//清除进位状态，下面会根据改变之后的值重新判断进位的取值
+	    		number[i]=(char)(sum+48);
+	    	}
+	    }
+		return number[0]=='1';
+	}
+	
+
+}
