@@ -1,0 +1,81 @@
+package offer;
+public class i25 {
+	public static class ListNode{
+		int value;
+		ListNode node;
+		ListNode next;
+		ListNode(int value){
+			this.value=value;
+		}
+	}
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		Tes1();
+	}
+	private static void Tes1() {
+		// TODO Auto-generated method stub
+		ListNode node1=new ListNode(1);//这里报错，是定义ListNode时，没有改成static
+		ListNode node2=new ListNode(2);
+		ListNode node3=new ListNode(3);
+		ListNode node4=new ListNode(4);
+		ListNode node5=new ListNode(5);
+		ListNode node6=new ListNode(6);
+		node1.next=node2;
+		node2.next=node3;
+		node3.next=node4;
+		node4.next=node5;
+		node5.next=node6;
+		ListNode node7=new ListNode(1);//这里报错，是定义ListNode时，没有改成static
+		ListNode node8=new ListNode(6);
+		ListNode node9=new ListNode(7);
+		ListNode node10=new ListNode(8);
+		ListNode node11=new ListNode(9);
+		ListNode node12=new ListNode(10);
+		node7.next=node8;
+		node8.next=node9;
+		node9.next=node10;
+		node10.next=node11;
+		node11.next=node12;
+		ListNode result= Merg(node1,node2);
+		System.out.print(result.value);
+	}
+	//递归方法
+	public static ListNode Merg(ListNode list1,ListNode list2)
+	{
+		if(list1==null)//如果其中一个链表为空，直接返回另一个链表
+			return list2;
+		if(list2==null)
+			return list1;
+		ListNode pHead=null;
+		if(list1.value<list2.value) {//如果list1的第一个数字小于list2的第一个数字，则list1的第一个数字作为整合之后的第一个数字
+			pHead=list1;
+			list1.next=Merg(list1.next,list2);
+		}else {
+			pHead=list2;
+			list2.next=Merg(list1,list2.next);
+		}
+		return pHead;
+	}
+	/*非递归方式*/
+/*	public ListNode Merg2(ListNode list1,ListNode list2) {
+		if(list1==null)//如果其中一个链表为空，直接返回另一个链表
+			return list2;
+		if(list2==null)
+			return list1;
+		ListNode pHead=new ListNode(0);
+		ListNode head=pHead;//指向第一个数字的指针不能为空
+		while(list1!=null&&list2!=null) {
+			if(list1.value<list2.value) {
+				head.next=list1;
+				list1=list1.next;
+			}else {
+				head.next=list2;
+				list1=list2.next;
+			}
+			head=head.next;
+		}
+		
+		return pHead.next;
+		
+	}*/
+}
