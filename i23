@@ -1,0 +1,72 @@
+package offer;
+
+public class i23 {
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		ListNode node1=new ListNode(1);//这里报错，是定义ListNode时，没有改成static
+		ListNode node2=new ListNode(2);
+		ListNode node3=new ListNode(3);
+		ListNode node4=new ListNode(4);
+		ListNode node5=new ListNode(5);
+		ListNode node6=new ListNode(6);
+		node1.next=node2;
+		node2.next=node3;
+		node3.next=node4;
+		node4.next=node5;
+		node5.next=node6;
+		node6.next=node3;
+		ListNode result=entryNodeOfLoop(node1);
+		System.out.println(result.value);
+	}
+	public static class ListNode{
+		int value;
+		ListNode node;
+		ListNode next;
+		ListNode(int value){
+			this.value=value;
+		}
+	}
+//计算环中的入口
+	public static ListNode entryNodeOfLoop(ListNode head) {
+		ListNode meetingNode=meetingNode(head);//首先判断链表中是否有环
+		if(meetingNode==null)
+			return null;
+		//首先计算环中节点的个数
+		int count=1;
+		ListNode pNode1=meetingNode.next;
+		while(pNode1!=meetingNode) {
+			count++;
+			pNode1=pNode1.next;
+		}
+		//用两个指针找到入口
+		//有一个指针先移动n个（n是环中节点的个数），之后两个指针同时移动，直到重合
+		pNode1=head;
+		for(int i=0;i<count;i++) {
+			pNode1=pNode1.next;
+		}
+		ListNode pNode2=head;
+		while(pNode1!=pNode2) {
+			pNode1=pNode1.next;
+			pNode2=pNode2.next;
+		}
+		return pNode1;
+		// TODO Auto-generated method stub
+		
+	}
+//判断链表中是否有环，设置两个指针，一个快指针每次移动两个，一个慢指针一次移动一个
+	public static ListNode meetingNode(ListNode head) {
+		// TODO Auto-generated method stub
+		if(head==null)
+			return null;
+		ListNode pSlow=head;
+		ListNode pHigh=head;
+		while(pHigh!=null&&pHigh.next.next!=null) {
+			pSlow=pSlow.next;
+			pHigh=pHigh.next.next;
+			if(pSlow!=null&&pSlow==pHigh)
+				return pSlow;
+		}	
+		return null;
+	}
+
+}
