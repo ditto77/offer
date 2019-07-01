@@ -1,0 +1,38 @@
+package offer;
+
+import java.util.Arrays;
+
+public class i21t2 {
+	//如果题目要求，调整之后的数组中，奇数与奇数之间，偶数与偶数之间的相对位置不能变化
+		//用类似于直接插入排序的方法
+		public static void main(String[] args) {
+			// TODO Auto-generated method stub
+			int[]array= {1,2,4,3,-5,7,9};
+			reOrderArray2(array);
+			System.out.println("调整结果："+Arrays.toString(array));
+		}
+
+	    private static void reOrderArray2(int[] array) {
+		// TODO Auto-generated method stub
+		if(array==null||array.length==0)
+			return;
+		int length=array.length;
+		int temp;
+		int j;
+		for(int i=1;i<length;i++) {
+			if((array[i]&1)!=0) {
+				j=i;
+				temp=array[j];
+				while((j>0)&&((array[j-1])&1)==0) {//一定是j》0，如果j=0那么，j-1=-1//如果j是奇数，而且j-1的数字是偶数，则将j插入到j-1之前
+					
+					array[j]=array[j-1];
+					j--;//一直把出现的奇数与前面的偶数交换，知道它的前面没有偶数为止
+				}
+				array[j]=temp;
+			}
+		}
+	}
+
+	}
+
+
