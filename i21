@@ -1,0 +1,40 @@
+package offer;
+
+import java.util.Arrays;
+
+public class i21 {
+	//类似于快排的算法，用两个指针来标识
+		public static void main(String[] args) {
+			// TODO Auto-generated method stub
+			int[]array= {1,2,4,3,-5,7,9};
+			reOrderArray(array);
+			 System.out.println("调整结果："+Arrays.toString(array));
+		}
+
+		public static void reOrderArray(int[] array) {
+			// TODO Auto-generated method stub
+		if(array==null||array.length==0)
+			return;
+		int length=array.length;
+		int low=0;
+		int high=length-1;
+		int temp;
+		while(low<high) {
+			while(low<high&&(array[low]&1)!=0)
+			{
+				low++;//low一直指向的都是奇数
+			}
+			while(high>=0&&(array[high]&1)==0) {
+				high--;//high一直指向的都是偶数
+			}
+			 if(low<high){           //如果low或者high指向的变化，同时又满足low在左边
+				 //则将两个指针指向的数字进行交换
+	             temp=array[low];
+	             array[low]=array[high];
+	             array[high]=temp;
+	         }
+		}
+			
+		}
+
+	}
