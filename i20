@@ -1,0 +1,57 @@
+package offer;
+public class i20 {
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		String string="+12.45";
+		char[]str=string.toCharArray();
+		if(isNumber(str)==true) {
+			System.out.print("is Number");
+		}else {
+			System.out.print("is not Number");
+		}
+	}
+	public static boolean isNumber(char [] str) {
+		if(str==null||str.length==0) {
+			return false;
+		}
+		int []index=new int[1];
+		index[0]=0;//用于记录当前字符的符号
+		//先判断A部分是不是带符号的整数
+		boolean isNumber;
+		isNumber=isInteger(str,index);
+		//判断B是不是无符号的
+		if(index[0]<str.length&&(str[index[0]]=='.')) {
+			index[0]++;
+			isNumber=isUnsignedInteger(str,index)||isNumber;
+		}
+		if(index[0]<str.length&&(str[index[0]]=='e'||str[index[0]]=='E')) {
+			index[0]++;
+		isNumber=isInteger(str,index)&&isNumber;
+		}
+		if(isNumber&&index[0]==str.length)
+			return true;
+		else
+			return false;
+		
+	}
+	public static boolean isUnsignedInteger(char[] str, int[] index) {
+		// TODO Auto-generated method stub
+		int start=index[0];
+		while(index[0]<str.length&&(str[index[0]]-'0'>=0&&str[index[0]]-'0'<=9)) 
+			index[0]++;
+		if(index[0]>start)
+			return true;
+		else
+			return false;
+		
+		
+	}
+	public static boolean isInteger(char[] str, int[] index) {
+		// TO
+		if(index[0]<str.length&&(str[index[0]]=='+'||str[index[0]]=='-')) 
+			index[0]++;
+		return isUnsignedInteger(str,index);
+      
+	}
+
+}
