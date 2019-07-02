@@ -1,0 +1,74 @@
+package offer;
+public class i29 {
+	 public static void main(String[] args) {
+	      int[][] a= {{1,2,3,4},{5,6,7,8},{9,10,11,12},{13,14,15,16}};
+         // int[][] a= {};
+//	      int[][] a= {{}};
+//	      int[][] a= {{1}};
+	     // int[][] a= {{1,2,3,4}};//1行4列
+//	      int[][] a= {{1},{2},{3},{4}};
+          //int[][] a= {{1,2,3},{4,5,6}};
+//	      int[][] a=null;
+	      if(a==null||a.length<=0||a[0].length<=0)
+				 System.out.print("null");
+	      else {
+	    	  int row=a.length;
+		      int col=a[0].length;
+	    	  PrintMatrix(a,row,col);
+	      }
+	    }
+	 public static void  PrintMatrix(int [][]a,int col,int row) {
+		 
+		//打印更内部的矩阵
+	      int start=0;
+	      while(col>start*2&&row>start*2) {
+	    	  printMatrixInCircle(a,start,row,col);
+	    	  ++start;
+	      }
+		 
+		 
+	 }
+	public static void printMatrixInCircle(int[][] a,int start,int row,int col) {
+		// TODO Auto-generated method stub
+	      int endx=col-1-start;//因为从0开始，因此要减去1，横坐标用列表示
+	      int endy=row-1-start;//row行
+	      if(endx<start||endy<start) {
+	    	  return;
+	      }
+	      if(endy==start) {//这时row=1，只有一行
+	    	  for(int i=start;i<=endx;i++) {
+	    		  System.out.print(a[start][i]+" ");
+	    	  }
+	    	  return;
+	      }
+	      if(endx==start) {//这时col=1
+	    	  for(int i=start;i<=endy;i++) {
+	    		  System.out.print(a[i][start]+" ");
+	    	  }  
+	    	  return;//结束打印
+	      }
+	      //下面从四个方向转圈打印
+	      //从左向右的方向
+	      for(int i=start;i<=endx;i++) {
+	    	  System.out.print(a[start][i]+" ");
+	      }
+	      //从上向下打印
+	      if(start<endy) {
+	    	  for(int i=start+1;i<=endy;i++) {//因为要从下一行开始，所以+1
+	    		  System.out.print(a[i][endx]+" ");	  
+	    	  }
+	      }
+	      //从右向左打印
+	      if(endx>start&&start<endy) {
+	    	  for(int i=endx-1;i>=start;i--) {//因为要从下一行开始，所以+1
+	    		  System.out.print(a[endy][i]+" ");	  
+	    	  }
+	      }
+	      //从下向上打印
+	      if(endy>start&&start<endy-1) {
+	    	  for(int i=endy-1;i>=start+1;i--) {//因为要从下一行开始，所以+1
+	    		  System.out.print(a[i][start]+" ");	  
+	    	  }
+	      }	
+	}
+}
