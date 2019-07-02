@@ -1,0 +1,29 @@
+package offer;
+
+public class i27 {
+
+	public static class TreeNode{
+		TreeNode root;
+		TreeNode left;
+		TreeNode right;
+		int value;
+		TreeNode(int value){
+			this.value=value;
+		}
+	}
+	public void MirrorTree(TreeNode root) {
+		if(root==null)
+			return;
+		if(root.left==null&&root.right==null) {
+			return;
+		}
+		TreeNode tempNode=root.left;
+		root.left=root.right;
+		root.right=tempNode;
+		if(root.left!=null)
+			MirrorTree(root.left);
+		if(root.right!=null)
+			MirrorTree(root.right);
+	}
+
+}
