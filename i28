@@ -1,0 +1,29 @@
+package offer;
+public class i28 {
+	public static class TreeNode{
+		int value;
+		TreeNode left;
+		TreeNode right;
+		TreeNode root;
+		TreeNode(int value){
+			this.value=value;
+		}	
+	}
+	public boolean isSymmetry(TreeNode root) {
+		if(root==null)//根节点为空
+			return true;
+		return isEqual(root.left,root.right);
+		
+	}
+	private boolean isEqual(TreeNode root1, TreeNode root2) {
+		// TODO Auto-generated method stub
+		if(root1==null&&root2==null)//根节点的左右子树都为空
+			return true;
+		if(root1==null||root2==null)//根节点的左右子树，只有一个为空
+			return false;
+		return (root1.value==root2.value)//根节点的左子树等于右子树，同时
+				&&isEqual(root1.left,root2.right)//右子树等于左子树，相当于镜像的树
+				&&isEqual(root1.right,root2.left);
+	}
+
+}
