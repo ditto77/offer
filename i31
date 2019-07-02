@@ -1,0 +1,26 @@
+package offer;
+
+import java.util.Stack;
+
+public class i31 {
+	public boolean isOrder(int []pushA,int[]popA) {
+		if(pushA==null||popA==null) {
+			return false;
+		}
+		Stack<Integer> stack=new Stack<Integer>();
+		if(pushA.length!=popA.length) {
+			return false;
+		}
+		int popindex=0;
+		for(int pushindex=0;pushindex<pushA.length;pushindex++) {
+			stack.push(pushA[pushindex]);//依次将入栈的序列入栈
+			while(!stack.empty()&&stack.peek()==popA[popindex]) {//如果入栈的栈顶元素等于弹出序列的元素，则弹出栈顶元素
+				stack.pop();
+				popindex++;
+			}
+		}
+		return stack.empty();
+		
+	}
+
+}
