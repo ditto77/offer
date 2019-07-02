@@ -1,0 +1,39 @@
+package offer;
+public class i26 {
+	public static class TreeNode{//定义树的结构
+		TreeNode left=null;
+		TreeNode right=null;
+		double value;
+		TreeNode(int value){
+			this.value=value;
+		}
+		public boolean hasSubTree(TreeNode root1,TreeNode root2) {
+			boolean result=false;
+			if(equal(root1.value,root2.value)) {//如果树的根节点相等，则判断从根节点出发的有没有与2相同的结构
+				result=doesTree1hasTree2(root1,root2);
+				if(!result)//如果只有根节点相等但是左右子树不相等，则判断从左右出发的有没有相等的
+					result=hasSubTree(root1.left,root2)||hasSubTree(root1.right,root2);
+			/* return doesTree1HasTree2(root1, root2)|| hasSubtree(root1.left, root2)
+                ||hasSubtree(root1.right, root2);*/
+			}
+			return result;
+			
+		}
+		private boolean doesTree1hasTree2(TreeNode root1, TreeNode root2) {
+			// TODO Auto-generated method stub
+			if(root2==null)//如果整颗树的根节点相等，但是2为空子树，则2是1的子结构
+				return true;
+			if(root1==null)
+				return false;	
+			return equal(root1.value,root2.value)&&doesTree1hasTree2(root1.left,root2.left)&&doesTree1hasTree2(root1.right,root2.right);
+		//如果1，2都不为空，则只有根左右都相等时，两棵树才相等
+		}
+		private boolean equal(double number1, double number2) {
+			//因为树的节点值是double类型，因此不能直接判断是否相等，用差值法判断
+			// TODO Auto-generated method stub
+			if(number2-number1>-0.0000001&&number2-number1<0.0000001)
+				return true;
+			return false;
+		}
+	}
+}
