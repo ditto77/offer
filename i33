@@ -1,0 +1,44 @@
+package offer;
+
+public class i33 {
+	//判断数组是否是二叉树的后续遍历
+	public boolean isBst(int []a,int length) {
+		if(a==null||length<=0)
+			return false;
+		return verifyCore(a, 0, a.length-1);
+		// TODO Auto-generated method stub
+	}
+	public boolean verifyCore(int []a,int start,int end) {
+        /*int root=a[a.length-1];//数组的最后一个数字就是根节点
+        int i=0;//因为i后面还要用到，因此定义为全局变量
+        int mid=start;
+        for(;i<a.length-1;i++) {
+        	if(a[i]>root)//直到第一个大于根节点的节点出现，i不再加1
+        		break;
+        }
+        int j=i;//j是右子树的第一个节点
+        for(;j<a.length-1;j++) {
+        	if(a[j]<root)//右子树不可能出现小于根节点的节点
+        		return false;
+        }
+        boolean left=true;
+		if(i>0)
+        	left=verifyCore(a,i);
+		boolean right = true;
+		if(i<a.length-1)
+	        right=verifyCore(a,mid,a.length-i-1);
+        return (left&&right);*/
+		  if(start>=end)
+	            return true;
+	        //判断左子树
+	        int mid=start;
+	        while(a[mid]<a[end])
+	            mid++;
+	        //判断右子树
+	        for(int i=mid;i<end;i++) {
+	            if(a[i]<a[end])
+	                return false;
+	        }
+	        return verifyCore(a, start, mid-1)&&verifyCore(a, mid, end-1);
+	}
+}
