@@ -1,0 +1,27 @@
+package offer;
+
+import java.util.Stack;
+
+public class i30 {
+	Stack<Integer>stack_data=new Stack<Integer>();//实例化栈
+	Stack<Integer> stack_min= new Stack<Integer>();
+	
+	public void push(int node) {
+		stack_data.push(node);
+		if(stack_min.empty()||stack_min.peek()>node) {//peek是弹出栈顶元素，但是不出栈
+			stack_min.push(node);
+		}else {
+			stack_min.push(stack_min.peek());
+		}
+	}
+	public void pop(int node) {
+		if(stack_data.empty()) {
+			stack_min.pop();
+			stack_data.pop();
+		}
+	}
+	public int min() {
+		return stack_min.peek();
+	}
+
+}
