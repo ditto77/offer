@@ -1,0 +1,59 @@
+package offer;
+public class i35 {
+	public static class ComplexListNode{
+		int value;
+		ComplexListNode next;
+		ComplexListNode sibling;
+		ComplexListNode(int value){
+			this.value=value;
+		}
+	}
+	public ComplexListNode cloneList(ComplexListNode head) {
+		cloneNode(head);//		复制节点
+		connectSiblingNode(head);//设置sibling
+		return reconnectNode(head);//拆分链表
+	}
+	//第一步：复制链表
+	private void cloneNode(ComplexListNode head) {
+		// TODO Auto-generated method stub
+		//相当于在每个节点后面复制一个一摸一样的节点，并连接起来
+		ComplexListNode node=head;
+		while(node!=null) {
+			ComplexListNode cloneNode=new ComplexListNode(node.value);
+			cloneNode.next=node.next;
+			node.next=cloneNode;
+			node=cloneNode.next;
+		}
+	}
+	//第二步：根据原节点的sibling，设置复制节点的sibling
+	private void connectSiblingNode(ComplexListNode head) {
+		// TODO Auto-generated method stub
+		ComplexListNode node=head;
+		while(node!=null) {
+			if(node.sibling!=null) {
+				node.next.sibling=node.sibling.next;
+				node=node.next.next;
+			}
+		}	
+	}
+	//第三步：拆分链表，按照奇偶位置，将链表拆分成原始链表和复制链表
+	private ComplexListNode reconnectNode(ComplexListNode head) {
+		// TODO Auto-generated method stub
+		ComplexListNode cloneHead=null;
+		ComplexListNode cloneNode=null;
+		ComplexListNode node=head;
+		if(head!=null) {
+			cloneHead.next=head.next;
+			cloneNode=node.next;
+			node.next=cloneNode.next;
+			node=node.next;
+		}
+		while(node!=null) {
+			cloneNode.next=node.next;
+			cloneNode=cloneNode.next;
+			node.next=cloneNode.next;
+			node=node.next;
+		}
+		return cloneHead;
+	}	
+}
