@@ -1,0 +1,38 @@
+package offer;
+import java.util.ArrayList;
+public class i34 {
+	public static class TreeNode{
+		TreeNode root;
+		TreeNode left;
+		TreeNode right;
+		int value;
+		TreeNode(int value){
+			this.value=value;
+		}
+	}
+	public void FindPath(TreeNode root,int target) {
+		if(root==null)
+			return;
+		ArrayList<Integer>list=new ArrayList<>();
+		printPath(root,target,list);
+	}
+	private void printPath(TreeNode node, int target, ArrayList<Integer> list) {
+		// TODO Auto-generated method stub
+		if(node==null)//如果根节点为空
+			return;
+		list.add(node.value);//如果根节点不为空，先把根节点添加进list中
+		target-=node.value;//因为每次target都会根据添加的节点发生变化
+		if(target==0&&node.left==null&&node.right==null) {
+			for(Integer integer:list) {//y因为之前定义list的时候，规定里面只能放Integer类型的
+				//所以在遍历list里面的内容时，也要转为Integer类型
+				System.out.print(integer+" ");
+				System.out.println();
+			}
+		}else {
+			printPath(node.left,target,list);//如果没有找到路径，就遍历节点的左右子树
+			printPath(node.right,target,list);
+		}
+		list.remove(list.size()-1);//如果找到叶子节点，都不满足条件，则将list中的内容移除
+	}
+
+}
