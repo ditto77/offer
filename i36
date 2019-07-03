@@ -1,0 +1,76 @@
+package offer;
+
+import java.util.LinkedList;
+
+public class i36 {
+	public static class TreeNode{
+		int value;
+		TreeNode head;
+		TreeNode left;
+		TreeNode pre;
+		TreeNode right;
+		TreeNode(int value){
+			this.value=value;
+		}
+	}
+	/*
+	 * 递归方法
+	 * 1:函数返回的是转换好的双向链表的头节点
+	 * 2:左子树处理之后与根节点连接
+	 * 3:右子树处理之后与根节点连接
+	 * 4:返回头节点
+	 * */
+	public TreeNode convert(TreeNode root) {
+		if(root==null)
+			return root;
+		//开始处理左子树
+		TreeNode left=convert(root.left);
+		TreeNode p=left;
+		if(left!=null) {
+			//找到左子树链表的末尾节点，也就是左子树最大的节点
+			while(p.right!=null) {
+				p=p.right;//找到最右边的一个叶子节点为止
+			}
+			//将末尾节点与根节点连接起来
+			p.right=root;
+			root.left=p;//相当于一个双向箭头
+		}
+		//开始处理右子树,找到右子树的第一个节点
+		TreeNode right=convert(root.right);
+			if(right!=null) {
+				root.right=right;
+				right.left=root;
+			}
+		return left==null?root:left;
+	}
+	/*
+	 * 非递归方法
+	 * 1:利用非递归中序遍历来连接节点
+	 * */
+	public TreeNode convert1(TreeNode root) {
+		TreeNode head=null;
+		TreeNode pre=null;
+		LinkedList<TreeNode>stack=new LinkedList<>();//链栈
+		while(root!=null||!stack.isEmpty()) {
+			//把根节点当作指针用
+			while(root!=null) {
+				stack.push(root);
+				root=root.left;
+			}
+			TreeNode node=stack.pop();//这时是最左边的节点4,弹出4
+			System.out.print(node.value);
+			if(head==null) {
+				head=node;//因为第一次循环，4是第一个节点，因此设置为head，pre
+				pre=node;
+			}else {
+				node.left=pre;//将节点与它前面的节点连接起来，指向前面的节点，前面的节点指向它
+				pre.right=node;
+				pre=node;//不能不写
+			}
+			root=node.right;//将根节点指向节点的右子树，如果没有右子树，则为空
+		}
+		return head;
+		
+	}
+
+}
