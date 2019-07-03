@@ -1,0 +1,48 @@
+package offer;
+public class i37 {
+	//一般情况下，需要中序和前/后序遍历才能确定
+	//但是这样要求节点必须不一样，而且读两个序列，速度太慢
+	//直接用前序遍历就可以，因为前序是根节点在前面
+	public static class TreeNode{
+		int value;
+		TreeNode head;
+		TreeNode left;
+		TreeNode pre;
+		TreeNode right;
+		TreeNode(int value){
+			this.value=value;
+		}
+	}
+	String Serialize(TreeNode node) {
+		StringBuilder sb=new StringBuilder();
+		if(node==null)
+			sb.append("$,");
+		else {
+			sb.append(node.value+",");
+			sb.append(Serialize(node.left));
+			sb.append(Serialize(node.right));
+		}
+		return sb.toString();
+	}
+	int index=0;
+	TreeNode Deserialize(String str) {
+		TreeNode node=null;
+		if(str==null||str.length()==0) {
+			return node;
+		}
+		int start=index;
+		while(str.charAt(index)!=',')
+			index++;
+		if(!str.substring(start,index).equals("$")) {
+			node=new TreeNode(Integer.parseInt(str.substring(start,index)));
+			index++;
+			node.left=Deserialize(str);
+			node.right=Deserialize(str);
+		}else {
+			index++;
+		}
+		return node;
+		
+	}
+
+}
