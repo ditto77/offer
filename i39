@@ -1,0 +1,59 @@
+package offer;
+
+public class i39 {
+	boolean isHalfNumber=false;
+	//第一种方式：基于快排的，
+	//利用partation函数获得某一个随机数，其余数字按照大小进行排序，小的在左边，大的在右边，如果刚好下标
+	//为n/2，则该数字即为所求，反之小于n/2，在右边查找
+	public int MoreHalfNumber(int []array) {
+		if(array==null||array.length<=0) {
+			return 0;
+		}
+		int low=0;
+		int high=array.length-1;
+		int index=partation(array,low,high);
+		while(index!=array.length>>1) {//>>1相当于n/2
+			if(index<array.length>>1) {
+				low=index+1;
+				index=partation(array,low,high);
+			}else {
+				high=index-1;
+				index=partation(array,low,high);
+			}
+			
+		}
+		//判断次数是否超过一半
+		int number=array[index];
+		int times=0;
+		for(int i=0;i<array.length;i++) {
+			if(array[i]==number)
+				times++;
+		}
+		if(times*2>array.length) {
+			isHalfNumber=true;
+		    return number;
+		}
+		return 0;
+		
+	}
+	private int partation(int[] array, int low, int high) {
+		// TODO Auto-generated method stub
+		int temp=array[low];
+		while(low<high) {
+			while(low<high&&array[high]>=temp) {//快排的实现
+				high--;
+			}
+			int temp1=array[low];
+			array[low]=array[high];
+			array[high]=temp1;
+			while(low<high&&array[high]<=temp) {
+				low++;
+			}
+			int temp2=array[low];
+			array[low]=array[high];
+			array[high]=temp2;
+		}
+		return low;
+	}
+
+}
