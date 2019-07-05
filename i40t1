@@ -1,0 +1,54 @@
+package offer;
+import java.util.ArrayList;
+public class i40t1 {
+	public static void main(String[]args) {
+		int[]input=new int[] {4,5,1,6,2,7,3,8};
+		GetLeastNumbers(input,4);
+	}
+	//基于红黑树实现，查找最小的k个数字。在容器中放k个数字，每次找到k个的最大值，与待插入的数字比较大小
+	//如果待插入的数字比最大值小，则替换，因为每次都要找最大、替换、删除，因此用大顶堆实现
+	public static ArrayList<Integer>GetLeastNumbers(int[]input,int k){
+		ArrayList<Integer>leastNumbers=new ArrayList<Integer>();
+		if(input==null||input.length==0||k<=0)
+			return leastNumbers;
+		int[]numbers=new int[k];//创造一个数组，先把前k个数放进去
+		for(int i=0;i<k;i++) {
+			numbers[i]=input[i];//依次放入k个数字
+		}
+		for(int i=k/2;i>=0;i--) {//从最后一个非叶子节点开始，直到根节点0，反复调整堆
+			//因为每个父亲节点的左孩子为2i+1，右孩子为2i+2
+			adjustHeap(numbers,i,k-1);//将数组中的k个数字进行排序成大顶堆
+		}
+		for(int i=k;i<input.length;i++) {//比较下一个数字与大顶堆最大的数字的大小（因为大顶堆最大的数字放在数组的第一个）
+			if(input[i]<numbers[0]) {//如果待插入的数字比大顶堆最大的数字小，则交换
+				numbers[0]=input[i];
+				adjustHeap(numbers,0,k-1);
+			}
+		}
+		for(int i:numbers)//将排好序的k个数字输出
+			leastNumbers.add(i);
+		System.out.println( leastNumbers);
+		return leastNumbers;
+		
+	}
+//大顶堆生成、调整方法
+	private static void adjustHeap(int[] arr, int start, int length) {
+		// TODO Auto-generated method stub
+		//在这里start相当于最后一个非叶子节点
+		int temp=arr[start];
+		int child=start*2+1;//i初始化为start的左孩子
+		//左孩子，因为在编号时，根节点是0，根节点左边是1，右边是2，依次往下
+		while(child<=length) {
+			if(child+1<=length&&arr[child+1]>arr[child])//如果右孩子大于左孩子
+				child++;//则取右孩子的节点，如果左孩子大于右孩子，则不改变子节点，子节点仍为左孩子
+			//也就是说，不管怎么样，child都表示左右孩子最大的节点
+			if(arr[child]<temp)//如果根节点大于所有的左右子树，则调整结束
+				break;
+			arr[start]=arr[child];//如果根节点不大于左右子树，则将根节点与较大的子树值交换
+			start=child;//修改start的值，以便继续向下调整
+			child=child*2+1;	//将start修改为左子树，再继续判断左子树是否为大顶堆
+		}
+		arr[start]=temp;//被调整的节点的值放入最终位置
+	}
+
+}
