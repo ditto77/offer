@@ -1,0 +1,57 @@
+package offer;
+import java.util.ArrayList;
+import java.util.Arrays;
+public class i38 {
+	/*public ArrayList<String> Permutation(String str) {
+		ArrayList<String>list=new ArrayList<String>();
+		if(str==null||str.length()==0) {
+			return list;
+		}
+		permutationCore(str.toCharArray(),0,list);
+		char[]chs=str.toCharArray();
+		Arrays.sort(chs);
+		return list;
+	}
+
+	private void permutationCore(char[] charArray, int index, ArrayList<String> list) {
+		// TODO Auto-generated method stub
+		if(index==charArray.length-1) {//只有一个字符
+			if(!list.contains(String.valueOf(charArray)))
+				list.add(String.valueOf(charArray));
+			}
+		else {
+			for(int i=index;i<charArray.length;i++) {
+				char temp=charArray[index];
+				charArray[index]=charArray[i];
+                charArray[i]=temp;
+                permutationCore(charArray,index+1,list);
+                charArray[i]=charArray[index];
+                charArray[index]=temp;
+			}
+		}
+}*/
+	public void main(String[]args) {
+		char[]array=new char[] {'a','b','c'};
+		permutation(array,0);
+	}
+	private void permutation(char[] array, int start) {
+		// TODO Auto-generated method stub
+		if(array.length<0) {
+			return;
+		}
+		if(start==array.length) {
+			System.out.println(array);//如果只剩下一个数字，则打印该数字
+		}
+		for(int i=start;i<array.length;i++) {
+			swap(array,i,start);//将b放到第一个位置
+			permutation(array,start+1);//进入bc循环
+			swap(array,start,i);//将c返回到交换之前的状态
+		}
+	}
+	private void swap(char[] array, int i, int j) {
+		// TODO Auto-generated method stub
+		char temp=array[j];
+		array[j]=array[i];
+		array[i]=temp;
+	}
+}
