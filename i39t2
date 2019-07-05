@@ -1,0 +1,40 @@
+package offer;
+
+public class i39t2 {
+	boolean HalfNumber=false;
+	//第二种方法。分别记录数字和出现的次数，初始次数都为1，如果下一个不相等，则减1，如果为0，则换数字
+	public int HalfNumber(int []array) {
+		if(array==null||array.length==0) {
+			return 0;
+		}
+		int number=array[0];
+		int count=1;
+		for(int i=1;i<array.length;i++) {
+			if(count==0) {
+				number=array[i];
+			    count++;
+			}//因为下一个初始的次数为1
+			else if(array[i]==number) {
+					count++;
+				}
+		    else {
+					count--;
+				}
+		}
+		//别忘记检验次数是否真的超过一半
+		if(count>0) {
+			int times=0;
+			for(int i=0;i<array.length;i++) {
+				if(array[i]==number)
+					times++;
+			}
+			if(times*2>array.length) {
+				HalfNumber=true;
+			    return number;
+			}
+		}	
+		return 0;
+		
+	}
+
+}
