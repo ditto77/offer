@@ -1,0 +1,52 @@
+package offer;
+
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+
+public class i40 {
+	//快排调整，基于数组的第k个数字进行调整，使得更小的k个数字都在数组的左边
+	public ArrayList<Integer> GetLeastNumbers(int[]input,int k){
+		ArrayList<Integer> leastNumbers=new ArrayList<Integer>();
+		while(input==null||input.length==0||k<=0) {
+			return leastNumbers;
+		}
+		int start=0;
+		int end=input.length-1;
+		int index=partation(input,start,end);
+		while(index!=k-1) {//如果找到的第一个数字
+			if(index<k-1) {//在排好的序列上，上一个数字的右边查找（start是从index+1开始的，前面的index个数字不管）
+				start=index+1;
+				index=partation(input,start,end);
+			}else {
+				end=index-1;//最后一个数字的左边查找
+				//说明要找的数字在该数字的左边
+				index=partation(input,start,end);//在上次排序的结果上找
+			}
+		}
+		for(int i=0;i<k;i++) {
+			leastNumbers.add(input[i]);
+		}
+		return leastNumbers;
+		
+	}
+
+	private int partation(int[] input, int start, int end) {
+		int temp=input[start];
+		while(start<end) {
+			while(start<end&&input[end]>=temp) {//快排的实现
+				end--;
+			}
+			int temp1=input[start];
+			input[start]=input[end];
+			input[end]=temp1;
+			while(start<end&&input[end]<=temp) {
+				start++;
+			}
+			int temp2=input[start];
+			input[start]=input[end];
+			input[end]=temp2;//返回的结果是排序之后原来第一个数字的下标
+		}
+		return start;
+	}
+
+}
