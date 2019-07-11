@@ -1,0 +1,24 @@
+package offer;
+
+public class i42 {
+	//第一种方法：依次往后遍历，如果加上当前数字导致总和变小，则从下一个开始，并保存刚才的最大总和
+	public int FindSum(int []array) {
+		if(array==null||array.length<=0) {
+			return 0;
+		}
+		int sum=array[0];
+		int maxsum=array[0];
+		for(int i=0;i<array.length;i++) {
+			if(sum<0) 
+				sum=array[i];//因为i已经加1，所以相当于从下一个数字开始
+			else 
+				sum+=array[i];
+			if(sum>maxsum)
+				maxsum=sum;
+			
+		}
+		return maxsum;
+		
+	}
+
+}
