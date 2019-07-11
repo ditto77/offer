@@ -1,0 +1,57 @@
+package offer;
+
+import java.util.Comparator;
+import java.util.PriorityQueue;
+
+public class i41 {
+	//数据流不是一次性读入所有的数据，而是一个一个读取，每一步都可能要求计算中位数
+	//如果总数是偶数，则中位数是中间两个数字的平均数，如果是奇数，则为中间的那个数
+	//因为最终分为两部分，左边的永远小于右边的，而且取出左边的最大一个和右边最小的一个
+	//因此左半部分采用大顶堆，右边部分为小顶堆
+	public class StreamMedian{
+		//优先队列），一个基于优先级堆的无界优先级队列。实际上是一个堆（不指定Comparator时默认为最小堆）
+		//通过传入自定义的Comparator函数可以实现大顶堆。
+		//PriorityQueue常用的方法有：poll,peek,remove,add等，插入的时间复杂度为O(log(n))
+		//remove(Object) 和 contains(Object) 时间复杂度为O(n)；
+		//检索方法（peek、element 和 size）时间复杂度为常量
+		PriorityQueue<Integer> minHeap=new PriorityQueue<Integer>();//小顶堆，默认为11的容量
+		PriorityQueue<Integer> maxHeap=new PriorityQueue<Integer>(11,new Comparator<Integer>(){
+		public int compare(Integer i1,Integer i2) {
+			return i2-i1;
+		}
+	});
+		//如果插入数据之前是偶数，要放到小顶堆中，这样小顶堆（右半部分）多一个就是中位数，但是有可能出现，小顶堆中的数字小于大顶堆
+		//因此先把数据放到大顶堆，之后与大顶堆堆顶元素比较，较大的移入小顶堆
+		public void Insert(Integer number) {
+			if(((minHeap.size()+maxHeap.size())&1)==0) {//如果添加之前是偶数时，添加到小顶堆
+				if(!maxHeap.isEmpty()&&maxHeap.peek()>number) {
+					maxHeap.offer(number);//offer与add都是添加，但是offer超过jvm限制的时候不会抛出异常，add用于链表，offer用于队列中
+					//add实现了list接口的方法，offer实现了queue的接口，add其实调用了offer方法
+					number=maxHeap.poll();// 获取并移除此队列的头，如果此队列为空，则返回 null。remove(Object o) 
+			         // 从此队列中移除指定元素的单个实例（如果存在）。
+					//poll是每次从堆顶删除一个节点，remove不仅可以删除头节点，还可以用remove(Object o) 来删除堆中的与给定对象相同的最先出现的对象
+				}
+				minHeap.offer(number);
+			}else {
+				if(!minHeap.isEmpty()&&minHeap.peek()<number) {
+					minHeap.offer(number);
+					number=minHeap.poll();
+				}
+				maxHeap.offer(number);
+			}
+		}
+		public Double GetMedian() {//获得中位数
+			int size=minHeap.size()+maxHeap.size();
+			if(size==0)
+				throw new RuntimeException();//是把异常包在一个运行时异常中抛出。
+			double median;
+			if((size&1)==0) {
+				median=(maxHeap.peek()+minHeap.peek())/2.0;
+			}else {
+				median=minHeap.peek();
+			}
+			return median;
+			
+		}
+	}
+}
