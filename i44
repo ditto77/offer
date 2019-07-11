@@ -1,0 +1,57 @@
+package offer;
+public class i44 {
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		i44 demo=new i44();
+        System.out.println(demo.digitAtIndex(0)==0);
+        System.out.println(demo.digitAtIndex(1)==1);
+        System.out.println(demo.digitAtIndex(19)==4);
+        System.out.println(demo.digitAtIndex(1000)==3);
+        System.out.println(demo.digitAtIndex(1001)==7);
+        System.out.println(demo.digitAtIndex(1002)==0);
+	}
+	public int digitAtIndex(int index) {//index是要求的数字序列中第几位的数字
+		if(index<0)
+			return -1;
+		int m=1;//假设刚开始要找的数字是一位数
+		while(true) {
+			int numbers=numberOfIntegers(m);//numbers是m位数字的总个数
+			//由index知道要求的数字是几位数字，先求出几位数字的总个数
+			if(index<numbers*m)//因为m位数的个数一共有9*10^(m-1)个，每个数字占m位，占了9*10^(m-1)*m位数字。
+				//如果满足index<numbers*m，证明要找的数字就是m位数字
+				return getDigit(index,m);
+			index-=numbers*m;//如果不满足上述条件，证明index并不是m位的数字，应该是m+1位的某一个数字
+			m++;
+		}
+	}
+	//获得第index位的数字
+	private int getDigit(int index, int m) {
+		// TODO Auto-generated method stub
+		int number=getFirstNumber(m)+index/m;//因为每个数字占m位，所以index/m相当于m位的第几个数
+		//再加上第一个数字，相当于要找的数字就是number
+		//再加上first，相当于从第一个数开始往后的第index/m个数
+		//index的计数是从0开始的
+		int indexFromRight=m-index%m;//判断m位数的第index/m的第几个数字，一共有m位，有可能是第1，2，3，。。。m位
+		//为什么用m-index%m，因为数字的位数是从右边数的，比如14的4，处于第一位，1处于第二位
+		for(int i=1;i<indexFromRight;i++) {
+			number/=10;//取不同位的数字，比如144/10=14，但是如果不满足i<indexFromRight,所以直接进行for之外的运算
+		}
+		return number%10;//如果indexFromRight=1
+	}
+	//第一个m位数
+	private int getFirstNumber(int m) {
+		// TODO Auto-generated method stub
+		if(m==1)
+			return 0;
+		return(int)Math.pow(10, m-1);
+	}
+	//计算m位数的总个数
+	//例如：10~99共90个数，100~999共900个
+	private int numberOfIntegers(int m) {
+		// TODO Auto-generated method stub
+		if(m==1)
+			return 10;
+		return(int)(9*Math.pow(10, m-1));
+	}
+
+}
