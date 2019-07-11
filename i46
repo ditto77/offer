@@ -1,0 +1,44 @@
+package offer;
+public class i46 {
+//因为从左向右划分数字的话，有可能出现重复数字的问题，因此我们从右向左划分
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		    i46 demo= new i46();
+	        System.out.println(demo.getTranslationCount(0)==1);
+	        System.out.println(demo.getTranslationCount(10)==2);
+	        System.out.println(demo.getTranslationCount(12258)==5);
+	        System.out.println(demo.getTranslationCount(-100)==0);
+	    }
+	 public int getTranslationCount(int number) {
+		 if(number<0)
+			 return 0;
+		 String sNumber=String.valueOf(number);//因为拼接之后，有可能会超出整数的表示范围，因此是一个大数问题
+		 //用数组或者字符串可以避免这个问题
+		 int length=sNumber.length();
+		 int []counts=new int[length];
+		 for(int i=length-1;i>=0;i--) {
+			 if(i==length-1)
+				 counts[i]=1;
+			 else {
+				 counts[i]=counts[i+1];
+	                if(canBeTrans(sNumber,i)) {
+	                    if(i==length-2)
+	                        counts[i]+=1;
+	                    else
+	                        counts[i]+=counts[i+2];
+	                }
+	            }
+	        }
+	        return counts[0];
+	    }
+	 
+	    private boolean canBeTrans(String sNumber, int i) {
+	        int a=sNumber.charAt(i)-'0';
+	        int b=sNumber.charAt(i+1)-'0';
+	        int convert=a*10+b;
+	        if(convert>=10 && convert<=25)
+	            return true;
+	        return false;
+	    }
+}
+
