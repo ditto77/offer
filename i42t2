@@ -1,0 +1,49 @@
+package offer;
+public class i42t2 {
+	 private static int large;
+	    public static void main(String[] args)
+	    {
+	        int[] array = {1, -2, 3, 10, -4, 7, 2, -5};
+	        int large = findGreatestSumOfSubArray(array);
+	        System.out.println(large); //18
+	    }
+	    private static int findGreatestSumOfSubArray(int[] array)
+	    {
+	        if (array == null || array.length == 0) return 0;
+	        large = Integer.MIN_VALUE;
+	        findGreatestSubArray(array, array.length - 1);
+	        return large;
+	    }
+	    /**
+	     * 递归
+	     *
+	     * @param array
+	     * @param index
+	     * @return
+	     */
+	    private static int findGreatestSubArray(int[] array, int index)
+	    {
+	        int result;
+	        if (index == 0)
+	        {
+	            result = array[0];
+	        } else
+	        {
+	            int previous = findGreatestSubArray(array, index - 1);
+	            //前面子数组的和小于0，则从当前值重新计算
+	            if (previous <= 0)
+	            {
+	                result = array[index];
+	            } else
+	            {
+	                result = previous + array[index];
+	            }
+	        }
+	        //更新最大值
+	        if (large < result)
+	        {
+	            large = result;
+	        }
+	        return result;
+	    }
+}
